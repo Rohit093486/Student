@@ -1,86 +1,76 @@
 import '../AddNewDetails/NewDetails.css';
-import React, {Component}from 'react'
+import React, { useState , useEffect } from 'react';
 import axios from 'axios';
+import { useHistory ,useParams} from 'react-router-dom';
 
-class EditDetails extends Component {
-  constructor(props) {
-      super(props)
-      this.state = {
-        editstd: []     
-      }
+
+const EditDetails = () => {
+    let history = useHistory();
+    const { id } = useParams();   
+  const [NewStd, setNewStd] = useState({
+    name: "",
+    email: "",
+    qualification: "",
+    currentDateTime: new Date().toDateString()
+
+  });
+  const { name, email, qualification} = NewStd;
+
+  const onInputChange = e => {
+    console.log(e.target.value);
+    setNewStd({...NewStd,[e.target.name]:e.target.value})
   }
-  editinfo=[]
- edit=this.props.editdetails
-  componentDidMount(){
-    // console.log(this.props.editdetails);
-    // this.editinfo.push(this.props.editdetails)
-    // this.setState({
-    //   editstd:this.editinfo,
-    // })     
-    // console.log(this.state.editstd);
-    console.log(this.edit);
-  }
-  // componentDidMount() {
-  //   axios({
-  //     method:"get",
-  //     url:`http://localhost:3003/students/${this.props.editdetails}`
-  // }).then((res)=>{
-  //     console.log(res)  
-  // },(err)=>{
-  //     console.log(err)
-  // })
-  // }
-  
-               Name = (event) => {
-                console.log(event.target.value);
-               this.edit.name = event.target.value
-              }   
-              Email = (event) => {
-                console.log(event.target.value);
-                this.edit.email = event.target.value
-              }
-              qualification = (event) => {
-                console.log(event.target.value);
-                this.edit.qualification = event.target.value
-              }
-  render() {
-    return (
-      <div>
-        <div class="modal fade" id="editData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ background: "rgba(21, 192, 178, 0.089)" }}>
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style={{ color: '#00bdd6fb' }}>Edit Student Detail</h5>
-                <button type="button" class="close " data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+
+    useEffect(() => {
+        loadStd();
+    }, []);
+  const onSubmit=async e => {
+    e.preventDefault();
+    await axios.put(`http://localhost:3003/students/${id}`, NewStd);
+    history.push("/");
+    }
+    
+    const loadStd=async () => {        
+       const result= await axios.get(`http://localhost:3003/students/${id}`);
+        console.log(result);
+        setNewStd(result.data)
+        }
+
+  return (
+    <div className="Body">
+    <div className="container">
+      <div className="title">
+        Edit Data
+      </div>
+      <form className="form" onSubmit={e=>onSubmit(e)}>
+             <div className="input_field">
+                <label>Name<span className="span">*</span> :</label>                        
+                <input type="text" className="input" name="name" value={name} onChange={e=>onInputChange(e)}/>
+             </div>
+          
+              <div className="input_field">
+                <label>E-mail <span className="span">*</span> :</label>                        
+                <input type="text" className="input" name="email" value={email}    onChange={e=>onInputChange(e)}/>
               </div>
-              <div class="modal-body">
-                <div className="form">
-                  <div className="input_field">
-                    <label>Name<span className="span">*</span> :</label>
-                    <input type="text" className="input" onChange={this.Name} />
-                  </div>
-
-                  <div className="input_field">
-                    <label>E-mail <span className="span">*</span> :</label>
-                    <input type="text" className="input"  onChange={this.Email} />
-                  </div>
-
-                  <div className="input_field">
-                    <label>qualification :</label>
-                    <input type="text" className="input" onChange={this.qualification} />
-                  </div>
-                  <div className="input_field input_button">
-                    <button className="btn" >Save</button>
-                  </div>
+          
+              <div className="input_field">
+                <label>Qualification :</label>                              
+                <div className ="custom_select">
+                  <select onChange={e=>onInputChange(e)} name="qualification" value={qualification}>
+                    <option value=" ">Select</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="M.Tech">M.Tech</option>
+                  </select>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+              <div className="input_field input_button">
+                <button className="butn">Update Data</button>                
+              </div>
+          </form>
       </div>
-    )
-  }
+    </div>
+  )
 }
 export default EditDetails;

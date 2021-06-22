@@ -1,18 +1,18 @@
 {
   "students": [
     {
-      "name": "Rohit Parihar",
+      "name": "Rohit",
       "email": "rohit.parihar@walkingtree.tech",
-      "qualification": "MCA",
-      "currentDateTime": "Mon Jun 07 2021",
-      "id": 4
+      "qualification": "B.Tech",
+      "currentDateTime": "Tue Jun 22 2021",
+      "id": 1
     },
     {
       "name": "Rohit",
       "email": "rohit.parihar@walkingtree.tech",
-      "qualification": "M.Tech",
-      "currentDateTime": "Mon Jun 07 2021",
-      "id": 5
+      "qualification": "MCA",
+      "currentDateTime": "Tue Jun 22 2021",
+      "id": 2
     }
   ]
 }
