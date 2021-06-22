@@ -2,16 +2,16 @@ import './NewDetails.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-
+import { toast } from "react-toastify";
 
 const NewDetails = () => {
-  let history = useHistory();
+  let history = useHistory();  
   const [NewStd, setNewStd] = useState({
     name: "",
     email: "",
     qualification: "",
     currentDateTime: new Date().toDateString()
-  });
+  });  
   const { name, email, qualification} = NewStd;
 
   const onInputChange = e => {
@@ -20,9 +20,10 @@ const NewDetails = () => {
   }
 
   const onSubmit=async e => {
-    e.preventDefault();
-    await axios.post("http://localhost:3003/students", NewStd);
-    history.push("/");
+      e.preventDefault();    
+      await axios.post("http://localhost:3003/students",NewStd);
+      toast.success("Added  has been completed successfully", { position: "top-center" });
+      history.push("/");      
   }
   return (
     <div className="Body">
@@ -33,13 +34,15 @@ const NewDetails = () => {
       <form className="form" onSubmit={e=>onSubmit(e)}>
              <div className="input_field">
                 <label>Name<span className="span">*</span> :</label>                        
-                <input type="text" className="input" name="name" value={name} onChange={e=>onInputChange(e)}/>
-             </div>
+                <input type="text" className="input" name="name" value={name} onChange={e=>onInputChange(e)} required/>
+            </div>
+            
           
               <div className="input_field">
                 <label>E-mail <span className="span">*</span> :</label>                        
-                <input type="text" className="input" name="email" value={email}    onChange={e=>onInputChange(e)}/>
+                <input type="email" className="input" name="email" value={email} onChange={e=>onInputChange(e)} required/>
               </div>
+          
           
               <div className="input_field">
                 <label>Qualification :</label>                              

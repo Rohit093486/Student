@@ -2,6 +2,7 @@ import '../AddNewDetails/NewDetails.css';
 import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import { useHistory ,useParams} from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 const EditDetails = () => {
@@ -24,9 +25,11 @@ const EditDetails = () => {
     useEffect(() => {
         loadStd();
     }, []);
+
   const onSubmit=async e => {
     e.preventDefault();
-    await axios.put(`http://localhost:3003/students/${id}`, NewStd);
+      await axios.put(`http://localhost:3003/students/${id}`, NewStd);
+      toast.success("Updated has been completed successfully",{position:"top-center"})
     history.push("/");
     }
     
@@ -45,12 +48,12 @@ const EditDetails = () => {
       <form className="form" onSubmit={e=>onSubmit(e)}>
              <div className="input_field">
                 <label>Name<span className="span">*</span> :</label>                        
-                <input type="text" className="input" name="name" value={name} onChange={e=>onInputChange(e)}/>
+                <input type="text" className="input" name="name" value={name} onChange={e=>onInputChange(e)} required/>
              </div>
           
               <div className="input_field">
                 <label>E-mail <span className="span">*</span> :</label>                        
-                <input type="text" className="input" name="email" value={email}    onChange={e=>onInputChange(e)}/>
+                <input type="text" className="input" name="email" value={email}    onChange={e=>onInputChange(e)} required/>
               </div>
           
               <div className="input_field">

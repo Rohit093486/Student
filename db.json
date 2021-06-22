@@ -3,16 +3,9 @@
     {
       "name": "Rohit",
       "email": "rohit.parihar@walkingtree.tech",
-      "qualification": "B.Tech",
+      "qualification": "BCA",
       "currentDateTime": "Tue Jun 22 2021",
       "id": 1
-    },
-    {
-      "name": "Rohit",
-      "email": "rohit.parihar@walkingtree.tech",
-      "qualification": "MCA",
-      "currentDateTime": "Tue Jun 22 2021",
-      "id": 2
     }
   ]
 }
