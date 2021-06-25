@@ -20,14 +20,17 @@ export default function Table() {
         setstudents(studentinfo.data.reverse());        
     }  
     
-    const removeStd = async id => {        
+    const removeStd = async id => { 
+        if(window.confirm('Are You Sure ?')){
         await axios.delete(`http://localhost:3003/students/${id}`);        
         loadstudents();
         toast.error("Remove has been completed successfully", { position: "top-center" });
-    }
+        } 
+            }
        
     return(
         <>
+        
             <div className="body">
                 <div className="tabel_responsive">
                     <span className="header">
